@@ -6,7 +6,7 @@ import StatusBar from '../StatusBar';
 import { WithLightbox, DeleteButton} from '../Common';
 
 const AlbumList=(props)=> {
-    const {albums,photos,deleteAlbum, editAlbum, createAlbum}=props;
+    const {albums,photos,createAlbum, editAlbum}=props;
 
     const getAlbumPhotos= (album) => {
         return album.photosIds
@@ -75,10 +75,21 @@ const AlbumList=(props)=> {
 AlbumList.propTypes={
     albums: PropTypes.object.isRequired,
     photos: PropTypes.object.isRequired,
-    deleteAlbum: PropTypes.func.isRequired,
-    editAlbum: PropTypes.func.isRequired,
     createAlbum: PropTypes.func.isRequired,
+    editAlbum: PropTypes.func.isRequired,
 
 };
 
-export default AlbumList;
+const mapStateToProps =(state) => {
+    return{
+        albums:state.album,
+    }
+}
+
+function mapDispatchToProps(dispach){
+    return{
+        deleteAlbum:key => dispach(albumActions.deleteAlbum(key)),
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AlbumList);
